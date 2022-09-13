@@ -1,8 +1,7 @@
 package de.codecentric.tutorials.boot.graphql.controller
 
-import de.codecentric.tutorials.boot.graphql.controller.dto.CreateCourse
 import de.codecentric.tutorials.boot.graphql.controller.dto.CreateStudent
-import de.codecentric.tutorials.boot.graphql.controller.dto.UpdateCourse
+import de.codecentric.tutorials.boot.graphql.controller.dto.SimplifiedStudent
 import de.codecentric.tutorials.boot.graphql.controller.dto.UpdateStudent
 import de.codecentric.tutorials.boot.graphql.db.Course
 import de.codecentric.tutorials.boot.graphql.db.CourseRepository
@@ -14,38 +13,26 @@ import org.springframework.graphql.data.method.annotation.QueryMapping
 import org.springframework.stereotype.Controller
 
 @Controller
-class GraphQLController(
+class StudentController(
     private val courseRepository: CourseRepository,
     private val studentRepository: StudentRepository
 ) {
-
-    @QueryMapping
-    fun allCourses(): List<Course> = courseRepository.findAll()
-
     @QueryMapping
     fun allStudents(): List<Student> = studentRepository.findAll()
+
+    @QueryMapping
+    fun lazyStudents(): List<SimplifiedStudent> = studentRepository.findLazyStudents().map { it.toSimplifiedStudent() }
+
+    @QueryMapping
+    fun eagerStudents(): List<SimplifiedStudent> = studentRepository.findEagerStudents().map {
+        it.toSimplifiedStudent()
+    }
 
     @MutationMapping
     fun createStudent(@Argument input: CreateStudent) = studentRepository.save(input.toEntity())
 
     @MutationMapping
-    fun createCourse(@Argument input: CreateCourse) = courseRepository.save(input.toEntity())
-
-    @MutationMapping
     fun updateStudent(@Argument input: UpdateStudent) = input.update()
-
-    @MutationMapping
-    fun updateCourse(@Argument input: UpdateCourse) = input.update()
-
-    @MutationMapping
-    fun deleteCourse(@Argument id: Int): Boolean {
-        return try {
-            courseRepository.deleteById(id)
-            true
-        } catch (e: Exception) {
-            false
-        }
-    }
 
     @MutationMapping
     fun deleteStudent(@Argument id: Int): Boolean {
@@ -77,12 +64,6 @@ class GraphQLController(
         courses = emptySet()
     )
 
-    private fun CreateCourse.toEntity() = Course(
-        id = null,
-        courseName = this.courseName,
-        students = emptySet()
-    )
-
     private fun UpdateStudent.update(): Student {
         val existingRecord = studentRepository.getReferenceById(this.id)
         val updatedRecord = Student(
@@ -95,13 +76,11 @@ class GraphQLController(
         return studentRepository.save(updatedRecord)
     }
 
-    private fun UpdateCourse.update(): Course {
-        val existingRecord = courseRepository.getReferenceById(this.id)
-        val updatedRecord = Course(
-            id = existingRecord.id,
-            courseName = this.courseName,
-            students = existingRecord.students
-        )
-        return courseRepository.save(updatedRecord)
-    }
+    private fun Student.toSimplifiedStudent() = SimplifiedStudent(
+        id = this.id ?: throw IllegalStateException("Retrieved student record without an id. [student=$this]"),
+        firstName = this.firstName,
+        lastName = this.lastName,
+        age = this.age,
+        numberOfCourses = this.courses.size
+    )
 }

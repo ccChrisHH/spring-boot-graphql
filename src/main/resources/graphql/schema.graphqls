@@ -5,15 +5,34 @@ type Student {
     age: Int
     courses: [Course]
 }
+
 type Course {
     id: Int
     courseName: String
     students: [Student]
 }
 
+type SimplifiedStudent {
+    id: Int
+    firstName: String
+    lastName: String
+    age: Int
+    numberOfCourses: Int
+}
+
+type SimplifiedCourse {
+    id: Int
+    courseName: String
+    numberOfStudents: Int
+}
+
 type Query {
     allCourses: [Course]
     allStudents: [Student]
+    unpopularCourses: [SimplifiedCourse]
+    popularCourses: [SimplifiedCourse]
+    lazyStudents: [SimplifiedStudent]
+    eagerStudents: [SimplifiedStudent]
 }
 
 input StudentInput {

@@ -15,7 +15,7 @@ class InitialDataLoader(
     private val faker = Faker()
 
     override fun onApplicationEvent(event: ApplicationReadyEvent) {
-        val students = List(100) {
+        val students = List(200) {
             val numberOfCourses = (Random().nextInt(1, 5))
             val fakeName = faker.name()
             Student(
@@ -27,8 +27,8 @@ class InitialDataLoader(
             )
         }
         studentRepository.saveAll(students)
-        val courses = List(10) {
-            val numberOfStudents = Random().nextInt(10, 21)
+        val courses = List(15) {
+            val numberOfStudents = Random().nextInt(10, 50)
             val fakeCourse = faker.unique().fetchFromYaml("how_i_met_your_mother.high_five")
             Course(
                 id = null,
