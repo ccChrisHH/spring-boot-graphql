@@ -37,6 +37,38 @@ class GraphQLController(
     @MutationMapping
     fun updateCourse(@Argument input: UpdateCourse) = input.update()
 
+    @MutationMapping
+    fun deleteCourse(@Argument id: Int): Boolean {
+        return try {
+            courseRepository.deleteById(id)
+            true
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    @MutationMapping
+    fun deleteStudent(@Argument id: Int): Boolean {
+        return try {
+            val student = studentRepository.getReferenceById(id)
+            val courses = courseRepository.findCoursesByStudentsContaining(student)
+            courses.forEach {
+                val updatedStudents = it.students.minus(student)
+                courseRepository.save(
+                    Course(
+                        id = it.id,
+                        courseName = it.courseName,
+                        students = updatedStudents
+                    )
+                )
+            }
+            studentRepository.delete(student)
+            true
+        } catch (e: Exception) {
+            return false
+        }
+    }
+
     private fun CreateStudent.toEntity() = Student(
         id = null,
         firstName = this.firstName,

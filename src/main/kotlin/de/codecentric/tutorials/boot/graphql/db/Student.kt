@@ -20,11 +20,6 @@ class Student(
     val lastName: String,
     @Column(nullable = false)
     val age: Int,
-    @ManyToMany
-    @JoinTable(
-        name = "enrollments",
-        joinColumns = [JoinColumn(name = "student_id")],
-        inverseJoinColumns = [JoinColumn(name = "course_id")]
-    )
+    @ManyToMany (mappedBy = "students")
     val courses: Set<Course>
 )
