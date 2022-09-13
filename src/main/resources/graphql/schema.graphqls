@@ -1,13 +1,13 @@
 type Student {
-    id: Int!,
-    firstName: String!,
-    lastName: String!,
-    age: Int!,
+    id: Int
+    firstName: String
+    lastName: String
+    age: Int
     courses: [Course]
 }
 type Course {
-    id: Int!,
-    courseName: String!,
+    id: Int
+    courseName: String
     students: [Student]
 }
 
@@ -19,14 +19,28 @@ type Query {
 input StudentInput {
     firstName: String!
     lastName: String!
-    age: Int!,
+    age: Int!
 }
 
 input CourseInput {
     courseName: String!
 }
 
+input StudentUpdate {
+    id: Int!
+    firstName: String!
+    lastName: String!
+    age: Int!
+}
+
+input CourseUpdate {
+    id: Int!,
+    courseName: String!
+}
+
 type Mutation {
-    createStudent(input: StudentInput): Student!
-    createCourse(input: CourseInput): Course!
+    createStudent(input: StudentInput): Student
+    createCourse(input: CourseInput): Course
+    updateStudent(input: StudentUpdate): Student
+    updateCourse(input: CourseUpdate): Course
 }
