@@ -8,9 +8,9 @@ import org.springframework.stereotype.Repository
 interface CourseRepository : JpaRepository<Course, Int> {
     fun findCoursesByStudentsContaining(student: Student): List<Course>
 
-    @Query("select c from Course c where c.students.size <= 15 order by c.students.size asc")
+    @Query("select c from Course c where size(c.students) <= 15 order by size(c.students) asc")
     fun findUnpopularCourses(): List<Course>
 
-    @Query("select c from Course c where c.students.size >=30 order by c.students.size desc")
+    @Query("select c from Course c where size(c.students) >=30 order by size(c.students) desc")
     fun findPopularCourses(): List<Course>
 }

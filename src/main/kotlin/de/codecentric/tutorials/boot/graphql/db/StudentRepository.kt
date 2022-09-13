@@ -6,9 +6,9 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface StudentRepository : JpaRepository<Student, Int> {
-    @Query("select s from Student s where s.courses.size <= 2 order by s.courses.size asc")
+    @Query("select s from Student s where size(s.courses) <= 2 order by size(s.courses) asc")
     fun findLazyStudents(): List<Student>
 
-    @Query("select s from Student s where s.courses.size >= 4 order by s.courses.size desc")
+    @Query("select s from Student s where size(s.courses) >= 5 order by size(s.courses) desc")
     fun findEagerStudents(): List<Student>
 }

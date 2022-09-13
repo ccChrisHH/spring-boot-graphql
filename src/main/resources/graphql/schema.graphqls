@@ -64,4 +64,6 @@ type Mutation {
     updateCourse(input: CourseUpdate): Course
     deleteStudent(id: Int!): Boolean
     deleteCourse(id: Int!): Boolean
+    enrollStudentInCourse(studentId: Int!, courseId: Int!): Student
+    unEnrollStudentFromCourse(studentId: Int!, courseId: Int!): Student
 }
