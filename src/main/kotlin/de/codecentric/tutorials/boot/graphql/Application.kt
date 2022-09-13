@@ -1,4 +1,4 @@
-package de.codecentric.tutorials.springbootgraphql
+package de.codecentric.tutorials.boot.graphql
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
