@@ -1,0 +1,17 @@
+type Student {
+    id: Int!,
+    firstName: String!,
+    lastName: String!,
+    age: Int!,
+    courses: [Course]
+}
+type Course {
+    id: Int!,
+    courseName: String!,
+    students: [Student]
+}
+
+type Query {
+    allCourses: [Course]
+    allStudents: [Student]
+}
