@@ -15,3 +15,18 @@ type Query {
     allCourses: [Course]
     allStudents: [Student]
 }
+
+input StudentInput {
+    firstName: String!
+    lastName: String!
+    age: Int!,
+}
+
+input CourseInput {
+    courseName: String!
+}
+
+type Mutation {
+    createStudent(input: StudentInput): Student!
+    createCourse(input: CourseInput): Course!
+}
