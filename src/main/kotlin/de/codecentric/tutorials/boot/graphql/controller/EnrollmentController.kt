@@ -1,8 +1,8 @@
 package de.codecentric.tutorials.boot.graphql.controller
 
-import de.codecentric.tutorials.boot.graphql.db.Course
+import de.codecentric.tutorials.boot.graphql.db.CourseEntity
 import de.codecentric.tutorials.boot.graphql.db.CourseRepository
-import de.codecentric.tutorials.boot.graphql.db.Student
+import de.codecentric.tutorials.boot.graphql.db.StudentEntity
 import de.codecentric.tutorials.boot.graphql.db.StudentRepository
 import org.springframework.graphql.data.method.annotation.Argument
 import org.springframework.graphql.data.method.annotation.MutationMapping
@@ -15,11 +15,11 @@ class EnrollmentController(
 ) {
 
     @MutationMapping
-    fun enrollStudentInCourse(@Argument studentId: Int, @Argument courseId: Int): Student {
+    fun enrollStudentInCourse(@Argument studentId: Int, @Argument courseId: Int): StudentEntity {
         val courseRecord = courseRepository.getReferenceById(courseId)
         val studentRecord = studentRepository.getReferenceById(studentId)
         courseRepository.save(
-            Course(
+            CourseEntity(
                 id = courseRecord.id,
                 courseName = courseRecord.courseName,
                 students = courseRecord.students.plus(studentRecord)
@@ -29,11 +29,11 @@ class EnrollmentController(
     }
 
     @MutationMapping
-    fun unEnrollStudentFromCourse(@Argument studentId: Int, @Argument courseId: Int): Student {
+    fun unEnrollStudentFromCourse(@Argument studentId: Int, @Argument courseId: Int): StudentEntity {
         val courseRecord = courseRepository.getReferenceById(courseId)
         val studentRecord = studentRepository.getReferenceById(studentId)
         courseRepository.save(
-            Course(
+            CourseEntity(
                 id = courseRecord.id,
                 courseName = courseRecord.courseName,
                 students = courseRecord.students.minus(studentRecord)

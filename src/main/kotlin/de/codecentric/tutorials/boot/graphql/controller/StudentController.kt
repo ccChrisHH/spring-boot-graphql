@@ -1,11 +1,13 @@
 package de.codecentric.tutorials.boot.graphql.controller
 
 import de.codecentric.tutorials.boot.graphql.controller.dto.CreateStudent
-import de.codecentric.tutorials.boot.graphql.controller.dto.SimplifiedStudent
+import de.codecentric.tutorials.boot.graphql.controller.dto.Student
 import de.codecentric.tutorials.boot.graphql.controller.dto.UpdateStudent
-import de.codecentric.tutorials.boot.graphql.db.Course
+import de.codecentric.tutorials.boot.graphql.controller.mapper.toDto
+import de.codecentric.tutorials.boot.graphql.controller.mapper.toEntity
+import de.codecentric.tutorials.boot.graphql.db.CourseEntity
 import de.codecentric.tutorials.boot.graphql.db.CourseRepository
-import de.codecentric.tutorials.boot.graphql.db.Student
+import de.codecentric.tutorials.boot.graphql.db.StudentEntity
 import de.codecentric.tutorials.boot.graphql.db.StudentRepository
 import org.springframework.graphql.data.method.annotation.Argument
 import org.springframework.graphql.data.method.annotation.MutationMapping
@@ -18,21 +20,19 @@ class StudentController(
     private val studentRepository: StudentRepository
 ) {
     @QueryMapping
-    fun allStudents(): List<Student> = studentRepository.findAll()
+    fun allStudents(): List<Student> = studentRepository.findAll().map { it.toDto() }
 
     @QueryMapping
-    fun lazyStudents(): List<SimplifiedStudent> = studentRepository.findLazyStudents().map { it.toSimplifiedStudent() }
+    fun lazyStudents(): List<Student> = studentRepository.findLazyStudents().map { it.toDto() }
 
     @QueryMapping
-    fun eagerStudents(): List<SimplifiedStudent> = studentRepository.findEagerStudents().map {
-        it.toSimplifiedStudent()
-    }
+    fun eagerStudents(): List<Student> = studentRepository.findEagerStudents().map { it.toDto() }
 
     @MutationMapping
-    fun createStudent(@Argument input: CreateStudent) = studentRepository.save(input.toEntity())
+    fun createStudent(@Argument input: CreateStudent): Student = studentRepository.save(input.toEntity()).toDto()
 
     @MutationMapping
-    fun updateStudent(@Argument input: UpdateStudent) = input.update()
+    fun updateStudent(@Argument input: UpdateStudent): Student = input.update().toDto()
 
     @MutationMapping
     fun deleteStudent(@Argument id: Int): Boolean {
@@ -42,7 +42,7 @@ class StudentController(
             courses.forEach {
                 val updatedStudents = it.students.minus(student)
                 courseRepository.save(
-                    Course(
+                    CourseEntity(
                         id = it.id,
                         courseName = it.courseName,
                         students = updatedStudents
@@ -56,17 +56,9 @@ class StudentController(
         }
     }
 
-    private fun CreateStudent.toEntity() = Student(
-        id = null,
-        firstName = this.firstName,
-        lastName = this.lastName,
-        age = this.age,
-        courses = emptySet()
-    )
-
-    private fun UpdateStudent.update(): Student {
+    private fun UpdateStudent.update(): StudentEntity {
         val existingRecord = studentRepository.getReferenceById(this.id)
-        val updatedRecord = Student(
+        val updatedRecord = StudentEntity(
             id = existingRecord.id,
             firstName = this.firstName,
             lastName = this.lastName,
@@ -75,12 +67,4 @@ class StudentController(
         )
         return studentRepository.save(updatedRecord)
     }
-
-    private fun Student.toSimplifiedStudent() = SimplifiedStudent(
-        id = this.id ?: throw IllegalStateException("Retrieved student record without an id. [student=$this]"),
-        firstName = this.firstName,
-        lastName = this.lastName,
-        age = this.age,
-        numberOfCourses = this.courses.size
-    )
 }

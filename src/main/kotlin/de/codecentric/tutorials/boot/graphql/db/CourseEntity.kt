@@ -10,7 +10,7 @@ import javax.persistence.JoinTable
 import javax.persistence.ManyToMany
 
 @Entity
-class Course(
+class CourseEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     val id: Int?,
@@ -22,5 +22,5 @@ class Course(
         joinColumns = [JoinColumn(name = "course_id")],
         inverseJoinColumns = [JoinColumn(name = "student_id")]
     )
-    val students: Set<Student>
+    val students: List<StudentEntity>
 )

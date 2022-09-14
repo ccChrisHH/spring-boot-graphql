@@ -1,67 +1,67 @@
 type Student {
-    id: Int
-    firstName: String
-    lastName: String
-    age: Int
-    courses: [Course]
-}
-
-type Course {
-    id: Int
-    courseName: String
-    students: [Student]
-}
-
-type SimplifiedStudent {
-    id: Int
-    firstName: String
-    lastName: String
-    age: Int
-    numberOfCourses: Int
-}
-
-type SimplifiedCourse {
-    id: Int
-    courseName: String
-    numberOfStudents: Int
-}
-
-type Query {
-    allCourses: [Course]
-    allStudents: [Student]
-    unpopularCourses: [SimplifiedCourse]
-    popularCourses: [SimplifiedCourse]
-    lazyStudents: [SimplifiedStudent]
-    eagerStudents: [SimplifiedStudent]
-}
-
-input StudentInput {
+    id: Int!
     firstName: String!
     lastName: String!
     age: Int!
+    numberOfCourses: Int!
+    courses: [SlimCourse]!
 }
 
-input CourseInput {
-    courseName: String!
-}
-
-input StudentUpdate {
+type SlimStudent {
     id: Int!
     firstName: String!
     lastName: String!
     age: Int!
 }
 
-input CourseUpdate {
+type Course {
+    id: Int!
+    courseName: String!
+    numberOfStudents: Int!
+    students: [SlimStudent]!
+}
+
+type SlimCourse {
+    id: Int!
+    courseName: String!
+}
+
+type Query {
+    allCourses: [Course]
+    allStudents: [Student]
+    unpopularCourses: [Course]
+    popularCourses: [Course]
+    lazyStudents: [Student]
+    eagerStudents: [Student]
+}
+
+input CreateStudent {
+    firstName: String!
+    lastName: String!
+    age: Int!
+}
+
+input CreateCourse {
+    courseName: String!
+}
+
+input UpdateStudent {
+    id: Int!
+    firstName: String!
+    lastName: String!
+    age: Int!
+}
+
+input UpdateCourse {
     id: Int!,
     courseName: String!
 }
 
 type Mutation {
-    createStudent(input: StudentInput): Student
-    createCourse(input: CourseInput): Course
-    updateStudent(input: StudentUpdate): Student
-    updateCourse(input: CourseUpdate): Course
+    createStudent(input: CreateStudent!): Student
+    createCourse(input: CreateCourse!): Course
+    updateStudent(input: UpdateStudent!): Student
+    updateCourse(input: UpdateCourse!): Course
     deleteStudent(id: Int!): Boolean
     deleteCourse(id: Int!): Boolean
     enrollStudentInCourse(studentId: Int!, courseId: Int!): Student

@@ -15,27 +15,33 @@ class InitialDataLoader(
     private val faker = Faker()
 
     override fun onApplicationEvent(event: ApplicationReadyEvent) {
-        val students = List(200) {
-            val numberOfCourses = (Random().nextInt(1, 5))
+        val students = createStudents()
+        studentRepository.saveAll(students)
+        courseRepository.saveAll(createCoursesAndEnrollments(students))
+    }
+
+    private fun createStudents(): List<StudentEntity> {
+        return List(200) {
             val fakeName = faker.name()
-            Student(
+            StudentEntity(
                 id = null,
                 firstName = fakeName.firstName(),
                 lastName = fakeName.lastName(),
                 age = faker.number().numberBetween(18, 40),
-                courses = emptySet()
+                courses = emptyList()
             )
         }
-        studentRepository.saveAll(students)
-        val courses = List(15) {
+    }
+
+    private fun createCoursesAndEnrollments(studentEntities: List<StudentEntity>): List<CourseEntity> {
+        return List(15) {
             val numberOfStudents = Random().nextInt(10, 50)
             val fakeCourse = faker.unique().fetchFromYaml("how_i_met_your_mother.high_five")
-            Course(
+            CourseEntity(
                 id = null,
                 courseName = fakeCourse,
-                students = students.shuffled().take(numberOfStudents).toSet()
+                students = studentEntities.shuffled().take(numberOfStudents)
             )
         }
-        courseRepository.saveAll(courses)
     }
 }

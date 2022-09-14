@@ -1,9 +1,11 @@
 package de.codecentric.tutorials.boot.graphql.controller
 
+import de.codecentric.tutorials.boot.graphql.controller.dto.Course
 import de.codecentric.tutorials.boot.graphql.controller.dto.CreateCourse
-import de.codecentric.tutorials.boot.graphql.controller.dto.SimplifiedCourse
 import de.codecentric.tutorials.boot.graphql.controller.dto.UpdateCourse
-import de.codecentric.tutorials.boot.graphql.db.Course
+import de.codecentric.tutorials.boot.graphql.controller.mapper.toDto
+import de.codecentric.tutorials.boot.graphql.controller.mapper.toEntity
+import de.codecentric.tutorials.boot.graphql.db.CourseEntity
 import de.codecentric.tutorials.boot.graphql.db.CourseRepository
 import org.springframework.graphql.data.method.annotation.Argument
 import org.springframework.graphql.data.method.annotation.MutationMapping
@@ -15,21 +17,21 @@ class CourseController(
     val courseRepository: CourseRepository
 ) {
     @QueryMapping
-    fun allCourses(): List<Course> = courseRepository.findAll()
+    fun allCourses(): List<Course> = courseRepository.findAll().map { it.toDto() }
 
     @QueryMapping
-    fun unpopularCourses(): List<SimplifiedCourse> =
-        courseRepository.findUnpopularCourses().map { it.toSimplifiedCourse() }
+    fun unpopularCourses(): List<Course> =
+        courseRepository.findUnpopularCourses().map { it.toDto() }
 
     @QueryMapping
-    fun popularCourses(): List<SimplifiedCourse> =
-        courseRepository.findPopularCourses().map { it.toSimplifiedCourse() }
+    fun popularCourses(): List<Course> =
+        courseRepository.findPopularCourses().map { it.toDto() }
 
     @MutationMapping
-    fun createCourse(@Argument input: CreateCourse) = courseRepository.save(input.toEntity())
+    fun createCourse(@Argument input: CreateCourse): Course = courseRepository.save(input.toEntity()).toDto()
 
     @MutationMapping
-    fun updateCourse(@Argument input: UpdateCourse) = input.update()
+    fun updateCourse(@Argument input: UpdateCourse): Course = input.update().toDto()
 
     @MutationMapping
     fun deleteCourse(@Argument id: Int): Boolean {
@@ -41,25 +43,13 @@ class CourseController(
         }
     }
 
-    private fun CreateCourse.toEntity() = Course(
-        id = null,
-        courseName = this.courseName,
-        students = emptySet()
-    )
-
-    private fun UpdateCourse.update(): Course {
+    private fun UpdateCourse.update(): CourseEntity {
         val existingRecord = courseRepository.getReferenceById(this.id)
-        val updatedRecord = Course(
+        val updatedRecord = CourseEntity(
             id = existingRecord.id,
             courseName = this.courseName,
             students = existingRecord.students
         )
         return courseRepository.save(updatedRecord)
     }
-
-    private fun Course.toSimplifiedCourse() = SimplifiedCourse(
-        id = this.id ?: throw IllegalStateException("Retrieved course record without an id. [course=$this]"),
-        courseName = this.courseName,
-        numberOfStudents = this.students.size
-    )
 }

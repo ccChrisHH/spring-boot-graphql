@@ -9,9 +9,6 @@ query AllStudents {
         firstName
         lastName
         age
-        courses {
-            courseName
-        }
     }
 }
 ```

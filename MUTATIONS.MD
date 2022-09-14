@@ -3,7 +3,7 @@
 ## create a student
 
 ```graphql
-mutation CreateStudent($input: StudentInput) {
+mutation CreateStudent($input: CreateStudent!) {
     createStudent(input: $input) {
         id
         firstName
@@ -19,7 +19,7 @@ mutation CreateStudent($input: StudentInput) {
 ## update a student
 
 ```graphql
-mutation UpdateStudent($input: StudentUpdate) {
+mutation UpdateStudent($input: UpdateStudent!) {
     updateStudent(input: $input) {
         id
         firstName
@@ -43,7 +43,7 @@ mutation DeleteStudent($input: Int!) {
 ## create a course
 
 ```graphql
-mutation CreateCourse($input: CourseInput) {
+mutation CreateCourse($input: CreateCourse!) {
     createCourse(input: $input) {
         id
         courseName
@@ -54,7 +54,7 @@ mutation CreateCourse($input: CourseInput) {
 ## update a course
 
 ```graphql
-mutation UpdateCourse($input: CourseUpdate) {
+mutation UpdateCourse($input: UpdateCourse!) {
     updateCourse(input: $input) {
         id
         courseName
