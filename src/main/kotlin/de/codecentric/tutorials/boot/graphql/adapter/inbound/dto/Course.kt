@@ -1,4 +1,4 @@
-package de.codecentric.tutorials.boot.graphql.controller.dto
+package de.codecentric.tutorials.boot.graphql.adapter.inbound.dto
 
 data class Course(
     val id: Int,

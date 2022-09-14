@@ -1,5 +1,7 @@
-package de.codecentric.tutorials.boot.graphql.db
+package de.codecentric.tutorials.boot.graphql.adapter.outbound
 
+import de.codecentric.tutorials.boot.graphql.adapter.outbound.entities.CourseEntity
+import de.codecentric.tutorials.boot.graphql.adapter.outbound.entities.StudentEntity
 import net.datafaker.Faker
 import org.springframework.boot.context.event.ApplicationReadyEvent
 import org.springframework.context.ApplicationListener

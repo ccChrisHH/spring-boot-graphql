@@ -1,10 +1,10 @@
-package de.codecentric.tutorials.boot.graphql.controller
+package de.codecentric.tutorials.boot.graphql.adapter.inbound
 
-import de.codecentric.tutorials.boot.graphql.controller.dto.Student
-import de.codecentric.tutorials.boot.graphql.controller.mapper.toDto
-import de.codecentric.tutorials.boot.graphql.db.CourseEntity
-import de.codecentric.tutorials.boot.graphql.db.CourseRepository
-import de.codecentric.tutorials.boot.graphql.db.StudentRepository
+import de.codecentric.tutorials.boot.graphql.adapter.inbound.dto.Student
+import de.codecentric.tutorials.boot.graphql.adapter.inbound.mapper.toDto
+import de.codecentric.tutorials.boot.graphql.adapter.outbound.CourseRepository
+import de.codecentric.tutorials.boot.graphql.adapter.outbound.StudentRepository
+import de.codecentric.tutorials.boot.graphql.adapter.outbound.entities.CourseEntity
 import org.springframework.graphql.data.method.annotation.Argument
 import org.springframework.graphql.data.method.annotation.MutationMapping
 import org.springframework.stereotype.Controller
