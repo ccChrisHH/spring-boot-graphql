@@ -28,7 +28,9 @@ type SlimCourse {
 
 type Query {
     allCourses: [Course]
+    courseById(id: Int!): Course
     allStudents: [Student]
+    studentById(id: Int!): Student
     unpopularCourses: [Course]
     popularCourses: [Course]
     lazyStudents: [Student]

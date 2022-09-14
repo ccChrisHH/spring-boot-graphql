@@ -9,24 +9,12 @@ import de.codecentric.tutorials.boot.graphql.db.CourseEntity
 import de.codecentric.tutorials.boot.graphql.db.CourseRepository
 import org.springframework.graphql.data.method.annotation.Argument
 import org.springframework.graphql.data.method.annotation.MutationMapping
-import org.springframework.graphql.data.method.annotation.QueryMapping
 import org.springframework.stereotype.Controller
 
 @Controller
-class CourseController(
+class CourseMutationController(
     val courseRepository: CourseRepository
 ) {
-    @QueryMapping
-    fun allCourses(): List<Course> = courseRepository.findAll().map { it.toDto() }
-
-    @QueryMapping
-    fun unpopularCourses(): List<Course> =
-        courseRepository.findUnpopularCourses().map { it.toDto() }
-
-    @QueryMapping
-    fun popularCourses(): List<Course> =
-        courseRepository.findPopularCourses().map { it.toDto() }
-
     @MutationMapping
     fun createCourse(@Argument input: CreateCourse): Course = courseRepository.save(input.toEntity()).toDto()
 

@@ -11,7 +11,6 @@ import de.codecentric.tutorials.boot.graphql.db.StudentEntity
 import de.codecentric.tutorials.boot.graphql.db.StudentRepository
 import org.springframework.graphql.data.method.annotation.Argument
 import org.springframework.graphql.data.method.annotation.MutationMapping
-import org.springframework.graphql.data.method.annotation.QueryMapping
 import org.springframework.stereotype.Controller
 
 @Controller
@@ -19,15 +18,6 @@ class StudentController(
     private val courseRepository: CourseRepository,
     private val studentRepository: StudentRepository
 ) {
-    @QueryMapping
-    fun allStudents(): List<Student> = studentRepository.findAll().map { it.toDto() }
-
-    @QueryMapping
-    fun lazyStudents(): List<Student> = studentRepository.findLazyStudents().map { it.toDto() }
-
-    @QueryMapping
-    fun eagerStudents(): List<Student> = studentRepository.findEagerStudents().map { it.toDto() }
-
     @MutationMapping
     fun createStudent(@Argument input: CreateStudent): Student = studentRepository.save(input.toEntity()).toDto()
 

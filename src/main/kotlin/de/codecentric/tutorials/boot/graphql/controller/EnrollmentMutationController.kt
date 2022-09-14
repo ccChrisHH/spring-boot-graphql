@@ -9,11 +9,10 @@ import org.springframework.graphql.data.method.annotation.MutationMapping
 import org.springframework.stereotype.Controller
 
 @Controller
-class EnrollmentController(
+class EnrollmentMutationController(
     val studentRepository: StudentRepository,
     val courseRepository: CourseRepository
 ) {
-
     @MutationMapping
     fun enrollStudentInCourse(@Argument studentId: Int, @Argument courseId: Int): StudentEntity {
         val courseRecord = courseRepository.getReferenceById(courseId)
