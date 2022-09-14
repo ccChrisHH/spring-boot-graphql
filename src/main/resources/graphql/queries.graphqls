@@ -1,0 +1,36 @@
+type Student {
+    id: Int!
+    firstName: String!
+    lastName: String!
+    age: Int!
+    numberOfCourses: Int!
+    courses: [SlimCourse]!
+}
+
+type SlimStudent {
+    id: Int!
+    firstName: String!
+    lastName: String!
+    age: Int!
+}
+
+type Course {
+    id: Int!
+    courseName: String!
+    numberOfStudents: Int!
+    students: [SlimStudent]!
+}
+
+type SlimCourse {
+    id: Int!
+    courseName: String!
+}
+
+type Query {
+    allCourses: [Course]
+    allStudents: [Student]
+    unpopularCourses: [Course]
+    popularCourses: [Course]
+    lazyStudents: [Student]
+    eagerStudents: [Student]
+}
