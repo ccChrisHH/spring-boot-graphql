@@ -1,8 +1,8 @@
-package de.codecentric.tutorials.boot.graphql.adapter.inbound.mapper
+package de.codecentric.tutorials.boot.graphql.web.mapper
 
-import de.codecentric.tutorials.boot.graphql.adapter.inbound.dto.Course
-import de.codecentric.tutorials.boot.graphql.adapter.inbound.dto.SlimCourse
-import de.codecentric.tutorials.boot.graphql.adapter.outbound.entities.CourseEntity
+import de.codecentric.tutorials.boot.graphql.persistence.entities.CourseEntity
+import de.codecentric.tutorials.boot.graphql.web.dto.Course
+import de.codecentric.tutorials.boot.graphql.web.dto.SlimCourse
 
 fun CourseEntity.toDto() = Course(
     id = this.id ?: throw IllegalStateException("Retrieved course record without an id. [course=$this]"),

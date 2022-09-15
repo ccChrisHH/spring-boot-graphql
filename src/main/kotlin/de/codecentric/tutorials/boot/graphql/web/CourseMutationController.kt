@@ -1,12 +1,12 @@
-package de.codecentric.tutorials.boot.graphql.adapter.inbound
+package de.codecentric.tutorials.boot.graphql.web
 
-import de.codecentric.tutorials.boot.graphql.adapter.inbound.dto.Course
-import de.codecentric.tutorials.boot.graphql.adapter.inbound.dto.CreateCourse
-import de.codecentric.tutorials.boot.graphql.adapter.inbound.dto.UpdateCourse
-import de.codecentric.tutorials.boot.graphql.adapter.inbound.mapper.toDto
-import de.codecentric.tutorials.boot.graphql.adapter.outbound.CourseRepository
-import de.codecentric.tutorials.boot.graphql.adapter.outbound.entities.CourseEntity
-import de.codecentric.tutorials.boot.graphql.adapter.outbound.mapper.toEntity
+import de.codecentric.tutorials.boot.graphql.web.dto.Course
+import de.codecentric.tutorials.boot.graphql.web.dto.CreateCourse
+import de.codecentric.tutorials.boot.graphql.web.dto.UpdateCourse
+import de.codecentric.tutorials.boot.graphql.web.mapper.toDto
+import de.codecentric.tutorials.boot.graphql.persistence.CourseRepository
+import de.codecentric.tutorials.boot.graphql.persistence.entities.CourseEntity
+import de.codecentric.tutorials.boot.graphql.persistence.mapper.toEntity
 import org.springframework.graphql.data.method.annotation.Argument
 import org.springframework.graphql.data.method.annotation.MutationMapping
 import org.springframework.stereotype.Controller

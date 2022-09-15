@@ -1,8 +1,8 @@
-package de.codecentric.tutorials.boot.graphql.adapter.inbound.mapper
+package de.codecentric.tutorials.boot.graphql.web.mapper
 
-import de.codecentric.tutorials.boot.graphql.adapter.inbound.dto.SlimStudent
-import de.codecentric.tutorials.boot.graphql.adapter.inbound.dto.Student
-import de.codecentric.tutorials.boot.graphql.adapter.outbound.entities.StudentEntity
+import de.codecentric.tutorials.boot.graphql.web.dto.SlimStudent
+import de.codecentric.tutorials.boot.graphql.web.dto.Student
+import de.codecentric.tutorials.boot.graphql.persistence.entities.StudentEntity
 
 fun StudentEntity.toDto() = Student(
     id = this.id ?: throw IllegalStateException("Retrieved student record without an id. [course=$this]"),

@@ -1,4 +1,4 @@
-package de.codecentric.tutorials.boot.graphql.adapter.inbound.dto
+package de.codecentric.tutorials.boot.graphql.web.dto
 
 data class Student(
     val id: Int,

@@ -1,4 +1,4 @@
-package de.codecentric.tutorials.boot.graphql.adapter.outbound.entities
+package de.codecentric.tutorials.boot.graphql.persistence.entities
 
 import javax.persistence.Column
 import javax.persistence.Entity

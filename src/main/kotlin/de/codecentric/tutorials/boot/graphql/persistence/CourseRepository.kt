@@ -1,7 +1,7 @@
-package de.codecentric.tutorials.boot.graphql.adapter.outbound
+package de.codecentric.tutorials.boot.graphql.persistence
 
-import de.codecentric.tutorials.boot.graphql.adapter.outbound.entities.CourseEntity
-import de.codecentric.tutorials.boot.graphql.adapter.outbound.entities.StudentEntity
+import de.codecentric.tutorials.boot.graphql.persistence.entities.CourseEntity
+import de.codecentric.tutorials.boot.graphql.persistence.entities.StudentEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
