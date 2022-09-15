@@ -86,7 +86,7 @@ mutation EnrollStudent($studentId: Int!, $courseId: Int!) {
 }
 ```
 
-## unenroll a student in a course
+## unenroll a student from a course
 
 ```graphql
 mutation UnEnrollStudent($studentId: Int!, $courseId: Int!) {

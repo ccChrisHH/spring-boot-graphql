@@ -1,9 +1,7 @@
 # spring-boot-graphql Tutorial
 
-This tutorial project serves as a reference implementaton for demonstrating basic features graphql implemented within a
-spring boot application.
-
-This project provides a backend and GraphQL interface for managing courses, students and their enrollments.
+This tutorial aims to demonstrate basic features of graphql implemented within a spring boot application.
+The project provides a backend and GraphQL interface for managing courses, students and their enrollments.
 
 A set of random test data will be generated and stored in the in-memory H2 database each time the application is
 started.
