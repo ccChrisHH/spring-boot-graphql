@@ -1,25 +1,24 @@
 package de.codecentric.tutorials.boot.graphql.web
 
+import de.codecentric.tutorials.boot.graphql.domain.StudentQueryService
 import de.codecentric.tutorials.boot.graphql.web.dto.Student
-import de.codecentric.tutorials.boot.graphql.web.mapper.toDto
-import de.codecentric.tutorials.boot.graphql.persistence.StudentRepository
 import org.springframework.graphql.data.method.annotation.Argument
 import org.springframework.graphql.data.method.annotation.QueryMapping
 import org.springframework.stereotype.Controller
 
 @Controller
 class StudentQueryController(
-    private val studentRepository: StudentRepository
+    private val studentQueryService: StudentQueryService
 ) {
     @QueryMapping
-    fun allStudents(): List<Student> = studentRepository.findAll().map { it.toDto() }
+    fun allStudents(): List<Student> = studentQueryService.allStudents()
 
     @QueryMapping
-    fun studentById(@Argument id: Int): Student = studentRepository.getReferenceById(id).toDto()
+    fun studentById(@Argument id: Int): Student = studentQueryService.studentById(id)
 
     @QueryMapping
-    fun lazyStudents(): List<Student> = studentRepository.findLazyStudents().map { it.toDto() }
+    fun lazyStudents(): List<Student> = studentQueryService.lazyStudents()
 
     @QueryMapping
-    fun eagerStudents(): List<Student> = studentRepository.findEagerStudents().map { it.toDto() }
+    fun eagerStudents(): List<Student> = studentQueryService.eagerStudents()
 }

@@ -1,4 +1,4 @@
-package de.codecentric.tutorials.boot.graphql.web.mapper
+package de.codecentric.tutorials.boot.graphql.domain.mapper
 
 import de.codecentric.tutorials.boot.graphql.persistence.entities.CourseEntity
 import de.codecentric.tutorials.boot.graphql.web.dto.Course
