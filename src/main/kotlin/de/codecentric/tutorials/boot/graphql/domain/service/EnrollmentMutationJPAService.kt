@@ -1,5 +1,6 @@
-package de.codecentric.tutorials.boot.graphql.domain
+package de.codecentric.tutorials.boot.graphql.domain.service
 
+import de.codecentric.tutorials.boot.graphql.domain.EnrollmentMutationService
 import de.codecentric.tutorials.boot.graphql.domain.mapper.toDto
 import de.codecentric.tutorials.boot.graphql.persistence.CourseRepository
 import de.codecentric.tutorials.boot.graphql.persistence.StudentRepository

@@ -6,8 +6,10 @@ import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
 import javax.persistence.ManyToMany
+import javax.persistence.Table
 
 @Entity
+@Table(name = "students")
 class StudentEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
